@@ -1,0 +1,23 @@
+import yfinance as yf
+from datetime import datetime, timedelta
+
+def calculate_index_performance(symbol, start_date, end_date):
+    # Fetch historical data
+    data = yf.download(symbol, start=start_date, end=end_date)
+
+    # Calculate performance
+    start_price = data['Adj Close'][0]
+    end_price = data['Adj Close'][-1]
+    performance = ((end_price - start_price) / start_price) * 100
+
+    return performance
+
+if __name__ == "__main__":
+    # Specify the symbol and start date
+    symbol = 'XLC'
+    start_date = datetime(2022, 12, 30)  # Example start date
+    end_date = datetime(2023, 12, 30)  # Desired end date
+
+    # Calculate index performance
+    index_performance = calculate_index_performance(symbol, start_date, end_date)
+    print(f"2023 Index Performance (Return) for {symbol}: {index_performance:.2f}%")
